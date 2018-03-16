@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    signingConfigs {
+        defaultSigning {
+            keyAlias getProperty("key.alias")
+            keyPassword properties.getProperty("key.password")
+            storeFile file('./qiu.keystore')
+            storePassword properties.getProperty("key.password")
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.pocoin.digimage"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            //设置支持的SO库架构
+            abiFilters "armeabi-v7a", "x86"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.defaultSigning
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles 'proguard-rules.pro'
+            signingConfig signingConfigs.defaultSigning
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    flavorDimensions ''
+    productFlavors {
+
+        //线上环境
+        prod {
+
+        }
+        //内测环境
+        beta {
+
+        }
+    }
+}
+
+
+repositories {
+    flatDir { dirs "libs", "$rootDir/react/libs" }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.jakewharton:butterknife:$rootProject.ext.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
+    compile project(':basemvp')
+    compile project(':react')
+}
+
+
+apply from: 'packer.gradle'

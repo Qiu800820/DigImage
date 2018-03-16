@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="AppTheme.Immerse" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+</resources>

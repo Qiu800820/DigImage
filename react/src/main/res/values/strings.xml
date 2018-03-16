@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="react_load_fail">加载内容失败, 请重新加载</string>
+    <string name="react_retry">重试</string>
+    <string name="react_native_loading">正在努力加载模块…</string>
+
+
+</resources>
