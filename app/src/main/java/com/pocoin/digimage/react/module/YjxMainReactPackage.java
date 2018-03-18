@@ -52,7 +52,7 @@ public class YjxMainReactPackage extends MainReactPackage {
 
     private List<NetworkInterceptorCreator> createNetworkInterceptor(){
         List<NetworkInterceptorCreator> networkInterceptorCreators = new ArrayList<>(4);
-        networkInterceptorCreators.add(new LoggerInterceptorCreator());
+//        networkInterceptorCreators.add(new LoggerInterceptorCreator());
         return networkInterceptorCreators;
     }
 

@@ -11,7 +11,4 @@
         android:type="linear"
 
         android:useLevel="false" />
-    <corners
-        android:radius="5dp"
-        />
 </shape>

@@ -19,7 +19,7 @@ allprojects {
         jcenter()
         maven { url "https://www.jitpack.io" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-        maven { url "http://192.168.118.24:8081/node_modules/react-native/android" }
+        maven { url "http://192.168.1.13:8081/node_modules/react-native/android" }
     }
 }
 
@@ -27,9 +27,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-
 ext {
-
     // Sdk and tools
     minSdkVersion = 17
     targetSdkVersion = 25

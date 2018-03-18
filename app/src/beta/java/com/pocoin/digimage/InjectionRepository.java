@@ -38,7 +38,7 @@ public class InjectionRepository {
                     .connectTimeout(50, TimeUnit.SECONDS)
                     .readTimeout(50, TimeUnit.SECONDS)
                     .cache(getCache())
-                    .addInterceptor(getHttpLoggingInterceptor())
+//                    .addInterceptor(getHttpLoggingInterceptor())
                     .build();
         }
         return okHttpClient;

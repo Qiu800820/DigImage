@@ -4,11 +4,14 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.pocoin.digimage.react.module.YjxMainReactPackage;
 import com.pocoin.digimage.util.ComUtils;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.wsd.react.update.CodePush;
 
 import java.util.Arrays;
@@ -72,7 +75,10 @@ public class MyApp extends Application implements ReactApplication {
             @Override
             protected List<ReactPackage> getPackages() {
                 return Arrays.<ReactPackage>asList(
-                        new YjxMainReactPackage()
+                        new YjxMainReactPackage(),
+                        new LinearGradientPackage(),
+                        new VectorIconsPackage(),
+                        new PickerPackage()
                 );
             }
 
