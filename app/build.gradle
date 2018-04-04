@@ -21,6 +21,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         ndk {
@@ -30,7 +31,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             signingConfig signingConfigs.defaultSigning
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -69,14 +70,23 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:multidex:$rootProject.ext.androidMultidex"
     compile "com.jakewharton:butterknife:$rootProject.ext.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
     compile project(':basemvp')
     compile project(':react')
-    compile project(':react-native-image-crop-picker')
-    compile project(':react-native-linear-gradient')
-    compile project(':react-native-vector-icons')
 
+    compile(name:'react-native-camera-1.0.3', ext:'aar')
+    compile(name:'react-native-image-resizer-1.0.0', ext:'aar')
+    compile(name:'react-native-linear-gradient-2.4.0', ext:'aar')
+    compile(name:'react-native-vector-icons-4.5.0', ext:'aar')
+
+    compile "com.google.zxing:core:3.2.1"
+    compile "com.drewnoakes:metadata-extractor:2.9.1"
+    compile "com.google.android.gms:play-services-vision:10.2.0"
+    compile "com.android.support:exifinterface:27.1.0"
+
+    compile 'com.github.react-native-community:cameraview:d529251d24c0a367a28eea28f0eac2269d12f772'
 }
 
 apply from: 'packer.gradle'

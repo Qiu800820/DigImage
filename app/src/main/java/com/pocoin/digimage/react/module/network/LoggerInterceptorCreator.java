@@ -12,6 +12,6 @@ import okhttp3.Interceptor;
 public class LoggerInterceptorCreator implements NetworkInterceptorCreator {
     @Override
     public Interceptor create() {
-        return InjectionRepository.getHttpLoggingInterceptor();
+        return new CustomLoggerInterceptor(InjectionRepository.getHttpLoggingInterceptor());
     }
 }

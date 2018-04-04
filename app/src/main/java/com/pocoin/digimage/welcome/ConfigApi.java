@@ -13,7 +13,7 @@ import rx.Observable;
 
 public interface ConfigApi {
 
-    @GET("api/user/version/invoice")
+    @GET("bundle/version")
     Observable<BundleVersion> getBundle(@Query("version") String version, @Query("platform") String platform, @Query("sourceVersion") String localBundleVersion);
 
 

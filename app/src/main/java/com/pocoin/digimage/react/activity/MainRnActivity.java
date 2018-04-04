@@ -23,7 +23,7 @@ public class MainRnActivity extends RNActivity {
     private static final String EXTRA_KEY_MODULE_NAME = "module_name";
 
     public static Intent getMainRnIntent(Context context){
-        return getMainRnIntent(context, "Commit", "WinstarRn", null);
+        return getMainRnIntent(context, "Commit", "POCoin", null);
     }
 
     public static Intent getMainRnIntent(Context context, String path, String moduleName, Bundle params){

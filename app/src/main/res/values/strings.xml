@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DigImage</string>
+    <string name="app_name">POCoin</string>
     <string name="format_skip">跳过(%1$dS)</string>
     <string name="retry">重试</string>
     <string name="connect_fail_toast">网络链接失败，请稍后再试</string>

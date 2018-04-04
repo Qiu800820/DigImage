@@ -1,8 +1,10 @@
 package com.pocoin.digimage;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.multidex.MultiDex;
 
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactApplication;
@@ -11,11 +13,14 @@ import com.facebook.react.ReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.pocoin.digimage.react.module.YjxMainReactPackage;
 import com.pocoin.digimage.util.ComUtils;
-import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.wsd.react.update.CodePush;
+
+import org.reactnative.camera.RNCameraPackage;
 
 import java.util.Arrays;
 import java.util.List;
+
+import fr.bamlab.rnimageresizer.ImageResizerPackage;
 
 import static com.pocoin.digimage.InjectionRepository.REACT_NATIVE_DEVELOPER_SUPPORT;
 
@@ -30,6 +35,11 @@ public class MyApp extends Application implements ReactApplication {
     private AppLibLifecycleManager appLibLifecycleManager;
     private ReactNativeHost mReactNativeHost;
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
+    }
 
     @Override
     public void onCreate() {
@@ -76,9 +86,10 @@ public class MyApp extends Application implements ReactApplication {
             protected List<ReactPackage> getPackages() {
                 return Arrays.<ReactPackage>asList(
                         new YjxMainReactPackage(),
+                        new RNCameraPackage(),
                         new LinearGradientPackage(),
                         new VectorIconsPackage(),
-                        new PickerPackage()
+                        new ImageResizerPackage()
                 );
             }
 
