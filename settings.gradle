@@ -11,3 +11,6 @@ include ':app', ':basemvp', ':react'
 //
 //include ':react-native-camera'
 //project(':react-native-camera').projectDir = new File("$rnDir/node_modules/react-native-camera/android")
+
+//include ':react-native-wechat'
+//project(':react-native-wechat').projectDir = new File("$rnDir/node_modules/react-native-wechat/android")

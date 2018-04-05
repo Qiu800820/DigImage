@@ -13,6 +13,7 @@ import com.facebook.react.ReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.pocoin.digimage.react.module.YjxMainReactPackage;
 import com.pocoin.digimage.util.ComUtils;
+import com.theweflex.react.WeChatPackage;
 import com.wsd.react.update.CodePush;
 
 import org.reactnative.camera.RNCameraPackage;
@@ -89,6 +90,7 @@ public class MyApp extends Application implements ReactApplication {
                         new RNCameraPackage(),
                         new LinearGradientPackage(),
                         new VectorIconsPackage(),
+                        new WeChatPackage(),
                         new ImageResizerPackage()
                 );
             }
