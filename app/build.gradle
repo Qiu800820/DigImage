@@ -70,10 +70,9 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.android.support:multidex:$rootProject.ext.androidMultidex"
+//    compile "com.android.support:multidex:$rootProject.ext.androidMultidex"
     compile "com.jakewharton:butterknife:$rootProject.ext.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
-    compile project(':basemvp')
     compile project(':react')
 
     compile(name:'react-native-camera-1.0.3', ext:'aar')
@@ -85,7 +84,7 @@ dependencies {
     compile "com.google.zxing:core:3.2.1"
     compile "com.drewnoakes:metadata-extractor:2.9.1"
     compile "com.google.android.gms:play-services-vision:10.2.0"
-    compile "com.android.support:exifinterface:27.1.0"
+    compile "com.android.support:exifinterface:26.+"
 
     compile 'com.github.react-native-community:cameraview:d529251d24c0a367a28eea28f0eac2269d12f772'
 }

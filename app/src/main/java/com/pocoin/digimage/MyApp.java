@@ -16,6 +16,7 @@ import com.pocoin.digimage.util.ComUtils;
 import com.theweflex.react.WeChatPackage;
 import com.wsd.react.update.CodePush;
 
+
 import org.reactnative.camera.RNCameraPackage;
 
 import java.util.Arrays;

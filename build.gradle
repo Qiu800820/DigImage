@@ -35,7 +35,7 @@ ext {
     buildToolsVersion = '26.0.2'
     androidMultidex = '1.0.1'
     // App dependencies
-    supportLibraryVersion = '27.1.0'
+    supportLibraryVersion = '26.+'
     mvp = '2.0.1'
     easypermissions = '0.3.1'
     rxAndroid = '2.0.1'
