@@ -2,8 +2,9 @@ package com.pocoin.digimage.base.realm;
 
 import android.content.Context;
 
-import com.jiongbull.jlog.JLog;
-import com.pocoin.basemvp.data.YjxLibraryModule;
+import com.sum.base.cache.RealmManager;
+import com.sum.xlog.core.XLog;
+import com.wsd.react.update.ReactLibModule;
 
 import io.realm.DynamicRealm;
 import io.realm.Realm;
@@ -17,26 +18,23 @@ import io.realm.exceptions.RealmMigrationNeededException;
 
 public class RealmHelper {
 
-    public static volatile RealmConfiguration config;
-
     public static void init(Context context) {
         Realm.init(context);
         Realm.setDefaultConfiguration(getConfig());
+        RealmManager.setRealmProvider(new RealmManager.RealmProvider() {
+            @Override
+            public Realm provider() {
+                return getDefaultInstance();
+            }
+        });
     }
 
     public static RealmConfiguration getConfig(){
-
-        if(config == null){
-            config = new RealmConfiguration.Builder()
-//                .name("WinStar.realm")
-//                .encryptionKey(new byte[]{0x11, 0x22, 0x23})
-                    .migration(getRealmMigration())
-                    .modules(Realm.getDefaultModule(), new YjxLibraryModule())
-                    .schemaVersion(5)
-                    .build();
-        }
-
-        return config;
+        return new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .modules(Realm.getDefaultModule(), new ReactLibModule())
+                .schemaVersion(5)
+                .build();
     }
 
     private static RealmMigration getRealmMigration() {
@@ -68,7 +66,7 @@ public class RealmHelper {
         try {
             realm = Realm.getInstance(realmConfiguration); // Will migrate if needed
         } catch (RealmMigrationNeededException e) {
-            JLog.e(e);
+            XLog.e("RealmHelper", e);
             Realm.deleteRealm(realmConfiguration);
             realm = Realm.getInstance(realmConfiguration);
         }

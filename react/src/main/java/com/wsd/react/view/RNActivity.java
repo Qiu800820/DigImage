@@ -20,8 +20,7 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.jiongbull.jlog.JLog;
-import com.pocoin.basemvp.presentation.lce.view.ErrorView;
+import com.sum.xlog.core.XLog;
 import com.wsd.react.BuildConfig;
 import com.wsd.react.R;
 
@@ -167,7 +166,7 @@ public abstract class RNActivity extends ReactActivity {
             getReactInstanceManager().destroy();
             loadAppAndShowProgress();
         } catch (Exception e) {
-            JLog.e(e);
+            XLog.e("reloadApp error", e);
         }
 
     }

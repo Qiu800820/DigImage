@@ -2,23 +2,17 @@ package com.wsd.react.view;
 
 import android.content.Context;
 
-import com.pocoin.basemvp.data.YjxException;
-import com.pocoin.basemvp.presentation.lce.ErrorMessage;
 import com.wsd.react.R;
 
 /**
  * Created by Sen on 2017/11/14.
  */
 
-public class ReactLoadException extends YjxException {
+public class ReactLoadException extends ErrorMessageException {
 
     @Override
-    public ErrorMessage getErrorMessage(final Context context) {
-        return new ErrorMessage() {
-            @Override
-            public boolean isForceShowErrorView() {
-                return true;
-            }
+    public ErrorView.ErrorMessage getErrorMessage(final Context context) {
+        return new ErrorView.ErrorMessage() {
 
             @Override
             public boolean isVisibleButton() {
@@ -45,10 +39,6 @@ public class ReactLoadException extends YjxException {
                 return null;
             }
 
-            @Override
-            public Runnable getLceErrorProcessRunnable() {
-                return null;
-            }
         };
     }
 }

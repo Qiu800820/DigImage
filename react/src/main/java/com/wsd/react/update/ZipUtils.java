@@ -2,8 +2,8 @@ package com.wsd.react.update;
 
 import android.util.Log;
 
-import com.jiongbull.jlog.JLog;
-import com.pocoin.basemvp.util.CloseUtils;
+import com.sum.base.util.CloseUtils;
+import com.sum.xlog.core.XLog;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,7 +53,7 @@ public class ZipUtils {
 
             result = true;
         }catch (Exception e){
-            JLog.e(e);
+            XLog.e("ZipUtils", e);
             outFolder.delete();
         }finally {
             CloseUtils.closeIOQuietly(out);

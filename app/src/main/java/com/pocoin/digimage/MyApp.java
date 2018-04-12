@@ -10,10 +10,10 @@ import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.pocoin.digimage.react.module.YjxMainReactPackage;
 import com.pocoin.digimage.util.ComUtils;
-import com.wsd.react.update.CodePush;
 
 import org.reactnative.camera.RNCameraPackage;
 
@@ -74,7 +74,7 @@ public class MyApp extends Application implements ReactApplication {
             @Nullable
             @Override
             protected String getJSBundleFile() {
-                return CodePush.getJsBundleFile(BuildConfig.VERSION_NAME);
+                return CodePush.getJSBundleFile();
             }
 
             @Override
@@ -89,8 +89,14 @@ public class MyApp extends Application implements ReactApplication {
                         new RNCameraPackage(),
                         new LinearGradientPackage(),
                         new VectorIconsPackage(),
-                        new ImageResizerPackage()
+                        new ImageResizerPackage(),
+                        new CodePush("EvHlKACidUvZhxM6UolFj85La0Ee4ksvOXqog", MyApp.this, BuildConfig.DEBUG)
                 );
+            }
+
+            @Override
+            protected String getJSMainModuleName() {
+                return super.getJSMainModuleName();
             }
 
             @Override

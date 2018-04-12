@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.pocoin.basemvp.presentation.lce.ErrorMessage;
-import com.pocoin.basemvp.presentation.lce.view.ErrorView;
 import com.pocoin.digimage.InjectionRepository;
 import com.pocoin.digimage.util.ThrowableToErrorMessage;
+import com.wsd.react.view.ErrorView;
 import com.wsd.react.view.RNActivity;
 
 /**
@@ -64,14 +63,14 @@ public class MainRnActivity extends RNActivity {
 
     public void showErrorMessage(Throwable e) {
 
-        final ErrorMessage errorMessage = ThrowableToErrorMessage.toErrorMessage(e, this);
-        errorView.with(errorMessage, null);
+        final ErrorView.ErrorMessage errorMessage = ThrowableToErrorMessage.toErrorMessage(e, this);
+        errorView.with(errorMessage);
 
         errorView.setOnErrorProcessListener(new ErrorView.OnErrorProcessListener() {
             @Override
             public void onErrorProcessButtonClick() {
-                if (errorMessage.getLceErrorProcessRunnable() != null) {
-                    errorMessage.getLceErrorProcessRunnable().run();
+                if (errorMessage.getErrorProcessRunnable() != null) {
+                    errorMessage.getErrorProcessRunnable().run();
                 } else {
                     reloadApp();
                 }

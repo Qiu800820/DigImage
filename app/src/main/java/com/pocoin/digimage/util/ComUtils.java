@@ -3,7 +3,8 @@ package com.pocoin.digimage.util;
 import android.app.ActivityManager;
 import android.content.Context;
 
-import com.pocoin.basemvp.util.TextUtils;
+import com.sum.base.util.TextUtils;
+
 
 /**
  * Created by Sen on 2018/3/16.

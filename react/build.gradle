@@ -23,8 +23,10 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.facebook.react:react-native:0.50.3'
-    compile project(':basemvp')
+    api 'com.facebook.react:react-native:0.50.3'
+    api project(':cache')
+    api project(':base')
+
 
 
 

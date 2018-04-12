@@ -4,10 +4,10 @@ package com.wsd.react.update;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.pocoin.basemvp.data.cache.DataCacheImpl;
-import com.pocoin.basemvp.data.cache.RealmManager;
-import com.pocoin.basemvp.util.DownloadUtil;
-import com.pocoin.basemvp.util.TextUtils;
+import com.sum.base.cache.DataCacheImpl;
+import com.sum.base.cache.RealmManager;
+import com.sum.base.util.DownloadUtil;
+import com.sum.base.util.TextUtils;
 
 import java.util.List;
 
@@ -51,14 +51,13 @@ public class BundleCacheImpl extends DataCacheImpl<BundleVersion> {
     }
 
     @Override
-    protected boolean clearFromDB() {
+    protected void clearFromDB() {
         RealmManager.safeWriteRealm(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.delete(BundleVersion.class);
             }
         });
-        return false;
     }
 
     @Override

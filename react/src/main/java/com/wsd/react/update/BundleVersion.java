@@ -1,7 +1,7 @@
 package com.wsd.react.update;
 
 
-import com.pocoin.basemvp.util.DownloadUtil;
+import com.sum.base.util.DownloadUtil;
 
 import java.io.File;
 

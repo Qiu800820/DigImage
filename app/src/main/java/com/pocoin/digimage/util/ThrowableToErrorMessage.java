@@ -3,18 +3,15 @@ package com.pocoin.digimage.util;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
-import com.pocoin.basemvp.data.YjxException;
-import com.pocoin.basemvp.presentation.lce.ErrorMessage;
 import com.pocoin.digimage.R;
+import com.wsd.react.view.ErrorMessageException;
+import com.wsd.react.view.ErrorView;
 
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeoutException;
-
-import retrofit2.adapter.rxjava.HttpException;
 
 /**
  * Created by Robert yao on 2016/11/17.
@@ -22,22 +19,19 @@ import retrofit2.adapter.rxjava.HttpException;
 
 public class ThrowableToErrorMessage {
     @NonNull
-    public static ErrorMessage toErrorMessage(Throwable t, Context context){
-        if (t instanceof HttpException){
-            return new ServiceErrorMessage(context, ((HttpException) t).message());
-        }
+    public static ErrorView.ErrorMessage toErrorMessage(Throwable t, Context context){
         if (t instanceof TimeoutException || t instanceof SocketException || t instanceof SocketTimeoutException ||
                 t instanceof IOException){
             return new NoNetWorkErrorMessage(context);
         }
-        if (t instanceof YjxException){
-            return ((YjxException) t).getErrorMessage(context);
+        if (t instanceof ErrorMessageException){
+            return ((ErrorMessageException) t).getErrorMessage(context);
         }
 
         return new UnKnownErrorMessage(context, t.getMessage());
     }
 
-    private static class UnKnownErrorMessage implements ErrorMessage{
+    private static class UnKnownErrorMessage implements ErrorView.ErrorMessage {
 
         private Context context;
         private String error;
@@ -45,11 +39,6 @@ public class ThrowableToErrorMessage {
         private UnKnownErrorMessage(Context context, String error) {
             this.context = context;
             this.error = error;
-        }
-
-        @Override
-        public boolean isForceShowErrorView() {
-            return false;
         }
 
         @Override
@@ -78,26 +67,15 @@ public class ThrowableToErrorMessage {
             return new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(context, error, Toast.LENGTH_LONG).show();
-                }
-            };
-        }
-
-        @Override
-        public Runnable getLceErrorProcessRunnable() {
-            return new Runnable() {
-                @Override
-                public void run() {
                     if(context instanceof Activity){
                         ((Activity) context).finish();
                     }
-
                 }
             };
         }
     }
 
-    private static class NoNetWorkErrorMessage implements ErrorMessage{
+    private static class NoNetWorkErrorMessage implements ErrorView.ErrorMessage {
 
         private Context context;
 
@@ -108,11 +86,6 @@ public class ThrowableToErrorMessage {
         @Override
         public String getHintText() {
             return context.getString(R.string.connect_fail_toast);
-        }
-
-        @Override
-        public boolean isForceShowErrorView() {
-            return false;
         }
 
         @Override
@@ -133,79 +106,6 @@ public class ThrowableToErrorMessage {
 
         @Override
         public Runnable getErrorProcessRunnable() {
-            return new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, context.getString(R.string.connect_fail_toast), Toast.LENGTH_LONG).show();
-                }
-            };
-        }
-
-        @Override
-        public Runnable getLceErrorProcessRunnable() {
-            return null;
-        }
-    }
-
-    private static class ServiceErrorMessage implements ErrorMessage {
-
-        private Context context;
-        private String error;
-        private Runnable runnable;
-
-        private ServiceErrorMessage(Context context, String error) {
-            this(context, error, null);
-        }
-
-        private ServiceErrorMessage(Context context, String error, Runnable runnable) {
-            this.context = context;
-            this.error = error;
-            this.runnable = runnable;
-        }
-
-        @Override
-        public String getHintText() {
-            return error;
-        }
-
-        @Override
-        public boolean isForceShowErrorView() {
-            return false;
-        }
-
-        @Override
-        public String getErrorProcessButtonText() {
-            return context.getString(R.string.retry);
-        }
-
-        @Override
-        public boolean isVisibleButton() {
-            return true;
-        }
-
-
-        @Override
-        public int getHintImage() {
-            return R.mipmap.ic_launcher;
-        }
-
-        @Override
-        public Runnable getErrorProcessRunnable() {
-            return new Runnable() {
-                @Override
-                public void run() {
-
-                    if(runnable !=  null){
-                        runnable.run();
-                    }else{
-                        Toast.makeText(context, error, Toast.LENGTH_LONG).show();
-                    }
-                }
-            };
-        }
-
-        @Override
-        public Runnable getLceErrorProcessRunnable() {
             return null;
         }
     }

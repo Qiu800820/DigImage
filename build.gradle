@@ -33,27 +33,21 @@ ext {
     targetSdkVersion = 26
     compileSdkVersion = 26
     buildToolsVersion = '26.0.2'
-    androidMultidex = '1.0.1'
     // App dependencies
     supportLibraryVersion = '27.1.0'
-    mvp = '2.0.1'
     easypermissions = '0.3.1'
     rxAndroid = '2.0.1'
     rxJava = '2.1.8'
-    rxbinding = '0.4.0'
-    rxCache = '1.7.0-1.x'
-    rxCacheGsonPart = '0.0.3'
-    retrofit = '2.1.0'
+    retrofit = '2.4.0'
     retrofitMockServer = '2.1.0'
     okhttp = '3.4.1'
     okhttpLog = '3.4.0-RC1'
     gson = '2.7'
     butterKnifeVersion = '8.5.1'
-    jLog = '1.0.5'
+    xlog = '1.0.2'
     leakCanary = '1.5.1'
     ultra = '1.0.11'
     paginate = '0.5.1'
-    umengAnalytics = '6.0.4'
 
     //App Test dependencies
     junitVersion = '4.12'

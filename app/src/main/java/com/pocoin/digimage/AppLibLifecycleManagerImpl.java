@@ -4,13 +4,11 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.jiongbull.jlog.JLog;
-import com.jiongbull.jlog.constant.LogLevel;
 import com.pocoin.digimage.base.realm.RealmHelper;
 import com.squareup.leakcanary.LeakCanary;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.sum.xlog.core.LogLevel;
+import com.sum.xlog.core.XLog;
+import com.sum.xlog.core.XLogConfiguration;
 
 
 /**
@@ -34,7 +32,7 @@ public class AppLibLifecycleManagerImpl implements AppLibLifecycleManager {
             initDb();
             Fresco.initialize(context);
         }catch (Exception e){
-            JLog.e("=== 初始化失败 ===", e);
+            XLog.e("=== 初始化失败 ===", e);
         }
         Log.d(TAG, "=== endTime :" + System.currentTimeMillis());
     }
@@ -45,32 +43,16 @@ public class AppLibLifecycleManagerImpl implements AppLibLifecycleManager {
         Log.d(TAG, "=== RealmHelper endTime :" + System.currentTimeMillis());
     }
 
-
-
-//    private void initPush() {
-//        try {
-//            PushClient pushClient = Injection.providePushClient(context);
-//            pushClient.init();
-//            PushMessageStrategyFactory.getInstance().registerReceiverStrategy(PushMessageStrategyFactory.DEFAULT_TYPE,
-//                    TextPushMessageStrategy.class.getConstructor(PushMessage.class));
-//            PushMessageStrategyFactory.getInstance().registerReceiverStrategy(ActivityPushMessageStrategy.TYPE_ACTIVITY,
-//                    ActivityPushMessageStrategy.class.getConstructor(PushMessage.class));
-//            PushMessageStrategyFactory.getInstance().registerReceiverStrategy(IllegalPushMessageStrategy.TYPE_ILLEGAL,
-//                    IllegalPushMessageStrategy.class.getConstructor(PushMessage.class));
-//            PushMessageStrategyFactory.getInstance().registerReceiverStrategy(VersionPushMessageStrategy.TYPE_NEW_APP_VERSION,
-//                    VersionPushMessageStrategy.class.getConstructor(PushMessage.class));
-//        }catch (Exception e){
-//            JLog.e(e);
-//        }
-//    }
     private void initAppAnalysis() {
-        JLog.init(context);
-        if(!BuildConfig.DEBUG) {
-            JLog.getSettings()
-                    .writeToFile(true)
-                    .setLogLevelsForFile(createDebugLevel());
-
-        }
+        XLogConfiguration.Builder builder = new XLogConfiguration.Builder(context)
+                .setConsoleLogLevel(LogLevel.D) //Logger输出最低级别
+                .setFileLogLevel(LogLevel.D) //保存至文件最低级别
+                .setCrashHandlerOpen(true) //开启异常捕获
+                .setDefaultTag("XLog") //默认TAG
+                .setOriginalHandler(Thread.getDefaultUncaughtExceptionHandler()) //第三方统计
+                .setOnUpdateCrashInfoListener(null) //Crash自动上传处理
+                .setFileLogRetentionPeriod(7); //过期删除
+        XLog.init(builder.build());
 //        AppAnalysisClient appAnalysisClient = Injection.provideAppAnalysisClient(context);
 //        appAnalysisClient.init();
     }
@@ -80,22 +62,9 @@ public class AppLibLifecycleManagerImpl implements AppLibLifecycleManager {
         destroyAppAnalysis();
     }
     private void destroyPush() {
-//        PushClient pushClient = Injection.providePushClient(context);
-//        pushClient.destroy();
     }
     private void destroyAppAnalysis() {
-//        AppAnalysisClient appAnalysisClient = Injection.provideAppAnalysisClient(context);
-//        appAnalysisClient.destroy();
     }
 
-    private List<LogLevel> createDebugLevel(){
-        List<LogLevel> logLevels = new ArrayList<>(5);
-        logLevels.add(LogLevel.DEBUG);
-        logLevels.add(LogLevel.VERBOSE);
-        logLevels.add(LogLevel.INFO);
-        logLevels.add(LogLevel.WARN);
-        logLevels.add(LogLevel.ERROR);
-        return logLevels;
-    }
 
 }

@@ -3,19 +3,19 @@ package com.wsd.react.update;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.jiongbull.jlog.JLog;
-import com.pocoin.basemvp.util.DownloadUtil;
-import com.pocoin.basemvp.util.FileUtils;
-import com.wsd.react.BuildConfig;
+import com.sum.base.util.DownloadUtil;
+import com.sum.base.util.FileUtils;
+import com.sum.xlog.core.XLog;
 
 import java.io.File;
 import java.util.List;
 
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Sen on 2017/9/25.
@@ -43,76 +43,82 @@ public class CodePush {
      * 查询新版本并下载
      */
     public void updateVersion(final String downloadDirPath) {
-        JLog.d(TAG, "=== update version ===");
+        XLog.d(TAG, "=== update version ===");
         BundleCacheImpl.getInstance().get() // 1.获取本地最新Bundle
-                .map(new Func1<BundleVersion, BundleVersion>() {
+                .map(new Function<BundleVersion, BundleVersion>() {
                     @Override
-                    public BundleVersion call(BundleVersion bundleVersion) {
+                    public BundleVersion apply(BundleVersion bundleVersion) throws Exception {
                         if(bundleVersion != null) {
                             File file = new File(bundleVersion.getJsBundlePath());
                             if (!file.exists()){
-                                JLog.w(TAG, "=== 当前Bundle版本文件已删除，清除记录 ===");
+                                XLog.w(TAG, "=== 当前Bundle版本文件已删除，清除记录 ===");
                                 BundleCacheImpl.getInstance().destroy();
                                 bundleVersion = null;
                             }
                         }
-                        JLog.w(TAG, String.format("=== 当前Bundle版本%s ===", bundleVersion == null?"0":bundleVersion.getSourceVersion()));
+                        XLog.w(TAG, String.format("=== 当前Bundle版本%s ===", bundleVersion == null?"0":bundleVersion.getSourceVersion()));
                         return bundleVersion;
                     }
                 })
-                .flatMap(new Func1<BundleVersion, Observable<BundleVersion>>() {
+                .flatMap(new Function<BundleVersion, ObservableSource<BundleVersion>>() {
                     @Override
-                    public Observable<BundleVersion> call(BundleVersion bundleVersion) {
+                    public ObservableSource<BundleVersion> apply(BundleVersion bundleVersion) throws Exception {
                         //2.请求服务器最新Bundle
                         return bundleRequest.getBundle(
-                                BuildConfig.VERSION_NAME, PLATFORM_ANDROID,
+                                appVersionName, PLATFORM_ANDROID,
                                 bundleVersion == null?"0":bundleVersion.getSourceVersion());
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<BundleVersion, BundleVersion>() {
+                .map(new Function<BundleVersion, BundleVersion>() {
                     //2.1有新版本下载并插入数据库, 返回下载后Bundle
                     @Override
-                    public BundleVersion call(BundleVersion bundleVersion){
+                    public BundleVersion apply(BundleVersion bundleVersion) throws Exception {
                         bundleVersion.createDownloadPath(downloadDirPath);
                         download(bundleVersion);
                         BundleCacheImpl.getInstance().put(bundleVersion);
                         return bundleVersion;
                     }
                 })
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends BundleVersion>>() {
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends BundleVersion>>() {
                     //2.2没有新版本情况 返回本地数据库版本
                     @Override
-                    public Observable<? extends BundleVersion> call(Throwable throwable) {
-                        JLog.d(TAG, "=== 服务器无新版本， 检查本地未解压记录===");
+                    public ObservableSource<? extends BundleVersion> apply(Throwable throwable) throws Exception {
+                        XLog.d(TAG, "=== 服务器无新版本， 检查本地未解压记录===");
                         return BundleCacheImpl.getInstance().get();
                     }
                 })
-                .map(new Func1<BundleVersion, BundleVersion>() {
+                .map(new Function<BundleVersion, BundleVersion>() {
                     //3解压并更新状态
                     @Override
-                    public BundleVersion call(BundleVersion bundleVersion) {
+                    public BundleVersion apply(BundleVersion bundleVersion) throws Exception {
                         unZip(bundleVersion);
-                        JLog.d(TAG, "=== 解压成功  更新数据===");
+                        XLog.d(TAG, "=== 解压成功  更新数据===");
                         deleteHistoryBundleFileAndData(bundleVersion);
                         BundleCacheImpl.getInstance().put(bundleVersion);
                         return bundleVersion;
                     }
                 })
-                .subscribe(new Subscriber<BundleVersion>() {
+                .subscribe(new Observer<BundleVersion>() {
+
                     @Override
-                    public void onCompleted() {
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        JLog.e(TAG, e, "=== update new version error ===");
+                        XLog.e(TAG, "=== update new version error ===", e);
                     }
 
                     @Override
                     public void onNext(BundleVersion bundleVersion) {
-                        JLog.d(TAG, "=== 更新处理完成  通知React刷新Host===");
+                        XLog.d(TAG, "=== 更新处理完成  通知React刷新Host===");
                         if(updateEvent != null){
                             updateEvent.onUpdate(bundleVersion);
                         }
@@ -125,7 +131,7 @@ public class CodePush {
             throw new IllegalArgumentException("服务器返回Bundle信息错误，与当前React版本不兼容，抛弃更新请求");
         }
         DownloadUtil.DownloadInfo downloadInfo;
-        JLog.d(TAG, String.format("=== download new version！ path:%s===", bundleVersion.getDownloadPath()));
+        XLog.d(TAG, String.format("=== download new version！ path:%s===", bundleVersion.getDownloadPath()));
         try {
             downloadInfo = DownloadUtil.downloadInfoSync(okHttpClient, bundleVersion, false);
         } catch (Throwable throwable) {
@@ -138,11 +144,11 @@ public class CodePush {
         BundleVersion localVersion = BundleCacheImpl.getInstance().getNewVersionFromDb(appVersionName);
         Log.d(TAG, String.format("=== localBundleVersion:%s, serviceBundleVersion:%s   localAppVersion:%s, serviceAppVersion:%s===",
                 localVersion == null?"0":localVersion.getSourceVersion(), serviceVersion.getSourceVersion(),
-                BuildConfig.VERSION_NAME, serviceVersion.getVersion()));
+                appVersionName, serviceVersion.getVersion()));
 
         return localVersion == null ||
                 (safeIntValue(localVersion.getSourceVersion()) < safeIntValue(serviceVersion.getSourceVersion())
-                && BuildConfig.VERSION_NAME.equals(serviceVersion.getVersion()));
+                && appVersionName.equals(serviceVersion.getVersion()));
     }
 
     private void unZip(BundleVersion bundleVersion){
@@ -165,7 +171,7 @@ public class CodePush {
     public static String getJsBundleFile(String appVersionName) {
         String bundleFile = null;
         BundleVersion localVersion = BundleCacheImpl.getInstance().getFromDbByUnzip(appVersionName);
-        if (localVersion != null && BuildConfig.VERSION_NAME.equals(localVersion.getVersion())) {
+        if (localVersion != null && appVersionName.equals(localVersion.getVersion())) {
             File file = new File(localVersion.getJsBundlePath());
             if(!file.exists()){
                 new Thread(new Runnable(){
@@ -178,7 +184,7 @@ public class CodePush {
                 bundleFile = file.getAbsolutePath();
             }
         }
-        JLog.d(TAG, "bundle file:" + bundleFile);
+        XLog.d(TAG, "bundle file:" + bundleFile);
 
         return bundleFile;
     }
@@ -205,7 +211,7 @@ public class CodePush {
                 }
             }
         }catch (Exception e){
-            JLog.w(TAG, String.format("=== 删除文件失败 %s===", e.getMessage()));
+            XLog.w(TAG, String.format("=== 删除文件失败 %s===", e.getMessage()));
         }
 
     }

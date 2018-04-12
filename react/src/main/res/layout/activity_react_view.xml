@@ -24,7 +24,7 @@
             android:text="@string/react_native_loading"
             />
     </LinearLayout>
-    <com.pocoin.basemvp.presentation.lce.view.ErrorView
+    <com.wsd.react.view.ErrorView
         android:id="@+id/error_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

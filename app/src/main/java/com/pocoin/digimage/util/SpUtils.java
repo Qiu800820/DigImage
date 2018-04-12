@@ -7,8 +7,8 @@ package com.pocoin.digimage.util;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.jiongbull.jlog.JLog;
 import com.pocoin.digimage.MyApp;
+import com.sum.xlog.core.XLog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,7 +62,7 @@ public class SpUtils {
     public boolean saveStringToSp(String key , String value){
 
         if(TextUtils.isEmpty(key) || TextUtils.isEmpty(value)){
-            JLog.e(TAG, "=== saveStringToSp(),保存失败,key不能为null, 自动删除 === ");
+            XLog.e(TAG, "=== saveStringToSp(),保存失败,key不能为null, 自动删除 === ");
             remove(key);
             return false;
         }
@@ -76,7 +76,7 @@ public class SpUtils {
     public boolean remove(String key){
 
         if(TextUtils.isEmpty(key)){
-            JLog.e(TAG, "=== remove(),删除失败,key不能为null === ");
+            XLog.e(TAG, "=== remove(),删除失败,key不能为null === ");
             return false;
         }
         mSp.edit().remove(key).apply();
@@ -93,7 +93,7 @@ public class SpUtils {
     public boolean saveIntToSp(String key , int value){
 
         if(TextUtils.isEmpty(key)){
-            JLog.e(TAG, "=== saveIntToSp(),保存失败,key不能为null === ");
+            XLog.e(TAG, "=== saveIntToSp(),保存失败,key不能为null === ");
             return false;
         }
         mSp.edit().putInt(key, value).apply();
@@ -110,7 +110,7 @@ public class SpUtils {
     public boolean saveLongToSp(String key , long value){
 
         if(TextUtils.isEmpty(key)){
-            JLog.e(TAG , "=== saveLongToSp(),保存失败,key不能为null === ");
+            XLog.e(TAG , "=== saveLongToSp(),保存失败,key不能为null === ");
             return false;
         }
         mSp.edit().putLong(key, value).apply();
@@ -120,7 +120,7 @@ public class SpUtils {
     public boolean saveStringListToSp(String key , List<String> value){
 
         if(TextUtils.isEmpty(key)){
-            JLog.e(TAG , "=== saveLongToSp(),保存失败,key不能为null === ");
+            XLog.e(TAG , "=== saveLongToSp(),保存失败,key不能为null === ");
             return false;
         }
         JSONArray jsonArray = new JSONArray();
@@ -128,7 +128,7 @@ public class SpUtils {
             try {
                 jsonArray.put(i,value.get(i));
             } catch (JSONException e) {
-                JLog.e(TAG , "=== saveStringListToSp " + e.getMessage()+" ===");
+                XLog.e(TAG , "=== saveStringListToSp " + e.getMessage()+" ===");
                 return false;
             }
         }
@@ -143,7 +143,7 @@ public class SpUtils {
     public List<String> getStringListValue(String key,List<String> defaultValue){
 
         if(TextUtils.isEmpty(key)){
-            JLog.e(TAG , "=== getStringListValue(),获取失败,key不能为null === ");
+            XLog.e(TAG , "=== getStringListValue(),获取失败,key不能为null === ");
             return defaultValue;
         }
         String fromSp = mSp.getString(key,"");
@@ -153,7 +153,7 @@ public class SpUtils {
         try {
             JSONArray jsonArray = new JSONArray(fromSp);
             List<String> strings = new ArrayList<>();
-            JLog.e(TAG , "=== getStringListValue(),获取失败,json数据异常 === ");
+            XLog.e(TAG , "=== getStringListValue(),获取失败,json数据异常 === ");
             for (int i = 0; i < jsonArray.length(); i++) {
                 strings.add(jsonArray.get(i).toString());
             }
@@ -175,7 +175,7 @@ public class SpUtils {
     public boolean saveBoolenTosp(String key , boolean value){
 
         if(TextUtils.isEmpty(key)){
-            JLog.e(TAG , "=== saveBoolenTosp(),保存失败,key不能为null === ");
+            XLog.e(TAG , "=== saveBoolenTosp(),保存失败,key不能为null === ");
             return false;
         }
         mSp.edit().putBoolean(key, value).apply();
