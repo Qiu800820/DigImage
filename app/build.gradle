@@ -80,6 +80,7 @@ dependencies {
     compile project(':react')
 
     compile(name:'react-native-camera-1.0.3', ext:'aar')
+    compile(name:'react-native-wechat-1.9.9', ext:'aar')
     compile(name:'react-native-image-resizer-1.0.0', ext:'aar')
     compile(name:'react-native-linear-gradient-2.4.0', ext:'aar')
     compile(name:'react-native-vector-icons-4.5.0', ext:'aar')

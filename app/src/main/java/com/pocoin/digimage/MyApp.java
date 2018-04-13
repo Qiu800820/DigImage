@@ -14,6 +14,7 @@ import com.microsoft.codepush.react.CodePush;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.pocoin.digimage.react.module.YjxMainReactPackage;
 import com.pocoin.digimage.util.ComUtils;
+import com.theweflex.react.WeChatPackage;
 
 import org.reactnative.camera.RNCameraPackage;
 
@@ -90,13 +91,9 @@ public class MyApp extends Application implements ReactApplication {
                         new LinearGradientPackage(),
                         new VectorIconsPackage(),
                         new ImageResizerPackage(),
+                        new WeChatPackage(),
                         new CodePush("EvHlKACidUvZhxM6UolFj85La0Ee4ksvOXqog", MyApp.this, BuildConfig.DEBUG)
                 );
-            }
-
-            @Override
-            protected String getJSMainModuleName() {
-                return super.getJSMainModuleName();
             }
 
             @Override

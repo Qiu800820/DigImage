@@ -1,4 +1,4 @@
-include ':app', ':react', ':base', ':cache'
+include ':app', ':basemvp', ':react'
 //
 //include ':react-native-linear-gradient'
 //project(':react-native-linear-gradient').projectDir = new File("$rnDir/node_modules/react-native-linear-gradient/android")
@@ -11,6 +11,9 @@ include ':app', ':react', ':base', ':cache'
 //
 //include ':react-native-camera'
 //project(':react-native-camera').projectDir = new File("$rnDir/node_modules/react-native-camera/android")
+
+//include ':react-native-wechat'
+//project(':react-native-wechat').projectDir = new File("$rnDir/node_modules/react-native-wechat/android")
 //
 //include ':react-native-code-push'
 //project(':react-native-code-push').projectDir = new File("$rnDir/node_modules/react-native-code-push/android/app/")

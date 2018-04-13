@@ -30,6 +30,16 @@
             android:name=".react.activity.MainRnActivity"
             android:screenOrientation="portrait"
             />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            />
     </application>
 
 </manifest>
