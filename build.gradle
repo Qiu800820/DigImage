@@ -44,7 +44,7 @@ ext {
     okhttpLog = '3.4.0-RC1'
     gson = '2.7'
     butterKnifeVersion = '8.5.1'
-    xlog = '1.0.2'
+    xlog = '1.1.2'
     leakCanary = '1.5.1'
     ultra = '1.0.11'
     paginate = '0.5.1'
@@ -58,5 +58,9 @@ ext {
     rulesVersion = '0.5'
     espressoVersion = '2.2.2'
     robolectric = '3.1.1'
-
+    kotlin_version = '1.2.41'
+    react = [
+            root: root_path,
+            cliPath: "${root_path}/node_modules/react-native/local-cli/cli.js"
+    ]
 }

@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            postprocessing {
+                removeUnusedCode false
+                removeUnusedResources false
+                obfuscate false
+                optimizeCode false
+                proguardFile 'proguard-rules.pro'
+            }
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJava"
+    api "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroid"
+    api "com.sum.xlog:xlog:$rootProject.ext.xlog"
+    api "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.okhttpLog"
+    api("com.squareup.okhttp3:okhttp:$rootProject.ext.okhttp")
+
+    api ("pub.devrel:easypermissions:$rootProject.ext.easypermissions"){
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+    debugApi "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakCanary"
+    releaseApi "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakCanary"
+
+    api "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+}

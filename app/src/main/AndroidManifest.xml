@@ -40,6 +40,9 @@
             android:screenOrientation="portrait"
             android:exported="true"
             />
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="321c1e3964285873a3675680f20b5283" />
     </application>
 
 </manifest>

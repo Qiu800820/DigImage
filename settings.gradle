@@ -1,4 +1,4 @@
-include ':app', ':basemvp', ':react'
+include ':app', ':base', ':react', ':cache'
 //
 //include ':react-native-linear-gradient'
 //project(':react-native-linear-gradient').projectDir = new File("$rnDir/node_modules/react-native-linear-gradient/android")
@@ -17,3 +17,6 @@ include ':app', ':basemvp', ':react'
 //
 //include ':react-native-code-push'
 //project(':react-native-code-push').projectDir = new File("$rnDir/node_modules/react-native-code-push/android/app/")
+
+//include ':react-native-amap3d'
+//project(':react-native-amap3d').projectDir = new File("$rnDir/node_modules/react-native-amap3d/lib/android/")

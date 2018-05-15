@@ -31,6 +31,7 @@ gradle.projectsEvaluated {
 
     productFlavors.each { productFlavorName ->
         buildTypes.each { buildTypeName ->
+            println '=== react.gradle==='
             // Create variant and target names
             def flavorNameCapitalized = "${productFlavorName.capitalize()}"
             def buildNameCapitalized = "${buildTypeName.capitalize()}"
@@ -80,6 +81,7 @@ gradle.projectsEvaluated {
                 def devEnabled = !(config."devDisabledIn${targetName}"
                     || targetName.toLowerCase().contains("release"))
                 if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                    println '=== command bundle ==='
                     commandLine("cmd", "/c", *nodeExecutableAndArgs, cliPath, "bundle", "--platform", "android", "--dev", "${devEnabled}",
                             "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
                 } else {

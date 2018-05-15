@@ -22,8 +22,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.4"
         ndk {
             //设置支持的SO库架构
             abiFilters "armeabi-v7a", "x86"
@@ -31,14 +31,9 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled false
+            proguardFiles 'proguard-rules.pro'
             signingConfig signingConfigs.defaultSigning
-            postprocessing {
-                removeUnusedCode true
-                removeUnusedResources true
-                obfuscate true
-                optimizeCode true
-                proguardFile 'proguard-rules.pro'
-            }
         }
 
         debug {
@@ -66,6 +61,7 @@ android {
 
         }
     }
+
 }
 
 
@@ -79,20 +75,30 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
     compile project(':react')
 
+
     compile(name:'react-native-camera-1.0.3', ext:'aar')
     compile(name:'react-native-wechat-1.9.9', ext:'aar')
     compile(name:'react-native-image-resizer-1.0.0', ext:'aar')
     compile(name:'react-native-linear-gradient-2.4.0', ext:'aar')
     compile(name:'react-native-vector-icons-4.5.0', ext:'aar')
     compile(name:'react-native-code-push-5.3.2', ext:'aar')
+    compile(name:'react-native-amap3d-1.0.0-beta.1', ext:'aar')
 
     compile "com.google.zxing:core:3.2.1"
     compile "com.drewnoakes:metadata-extractor:2.9.1"
     compile "com.google.android.gms:play-services-vision:10.2.0"
     compile "com.android.support:exifinterface:27.1.0"
+    compile 'com.amap.api:3dmap:6.1.0'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
 
     compile 'com.github.react-native-community:cameraview:d529251d24c0a367a28eea28f0eac2269d12f772'
     compile 'com.nimbusds:nimbus-jose-jwt:5.1'
 }
 
 apply from: 'packer.gradle'
+apply from: 'codepush.gradle'
+apply from: 'react.gradle'
+
+
+

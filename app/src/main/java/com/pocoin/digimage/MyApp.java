@@ -11,6 +11,7 @@ import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.microsoft.codepush.react.CodePush;
+import com.microsoft.codepush.react.CodePushBuilder;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.pocoin.digimage.react.module.YjxMainReactPackage;
 import com.pocoin.digimage.util.ComUtils;
@@ -21,6 +22,7 @@ import org.reactnative.camera.RNCameraPackage;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.qiuxiang.react.amap3d.AMap3DPackage;
 import fr.bamlab.rnimageresizer.ImageResizerPackage;
 
 import static com.pocoin.digimage.InjectionRepository.REACT_NATIVE_DEVELOPER_SUPPORT;
@@ -91,14 +93,19 @@ public class MyApp extends Application implements ReactApplication {
                         new LinearGradientPackage(),
                         new VectorIconsPackage(),
                         new ImageResizerPackage(),
+                        new AMap3DPackage(),
                         new WeChatPackage(),
-                        new CodePush("EvHlKACidUvZhxM6UolFj85La0Ee4ksvOXqog", MyApp.this, BuildConfig.DEBUG)
+                        new CodePushBuilder("1GScdrWkJNajepr9kr2bmnQ2MDnc4ksvOXqog", MyApp.this)
+                                .setIsDebugMode(BuildConfig.DEBUG)
+                                .setServerUrl("http://push.markartisan.com/")
+                                .build()
+
                 );
             }
 
             @Override
             protected String getBundleAssetName() {
-                return "main.jsbundle";
+                return "index.android.bundle";
             }
         };
     }

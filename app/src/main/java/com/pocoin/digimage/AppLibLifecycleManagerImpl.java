@@ -6,9 +6,9 @@ import android.util.Log;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.pocoin.digimage.base.realm.RealmHelper;
 import com.squareup.leakcanary.LeakCanary;
-import com.sum.xlog.core.LogLevel;
 import com.sum.xlog.core.XLog;
 import com.sum.xlog.core.XLogConfiguration;
+import com.sum.xlog.print.LogLevel;
 
 
 /**
@@ -48,11 +48,9 @@ public class AppLibLifecycleManagerImpl implements AppLibLifecycleManager {
                 .setConsoleLogLevel(LogLevel.D) //Logger输出最低级别
                 .setFileLogLevel(LogLevel.D) //保存至文件最低级别
                 .setCrashHandlerOpen(true) //开启异常捕获
-                .setDefaultTag("XLog") //默认TAG
                 .setOriginalHandler(Thread.getDefaultUncaughtExceptionHandler()) //第三方统计
-                .setOnUpdateCrashInfoListener(null) //Crash自动上传处理
                 .setFileLogRetentionPeriod(7); //过期删除
-        XLog.init(builder.build());
+        XLog.init(context, builder.build());
 //        AppAnalysisClient appAnalysisClient = Injection.provideAppAnalysisClient(context);
 //        appAnalysisClient.init();
     }
